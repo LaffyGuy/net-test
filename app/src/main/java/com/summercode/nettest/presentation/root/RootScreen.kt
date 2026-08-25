@@ -16,6 +16,7 @@ import com.summercode.nettest.domain.model.AppMode
 import com.summercode.nettest.domain.model.ConfigError
 import com.summercode.nettest.presentation.common.ErrorContent
 import com.summercode.nettest.presentation.common.LoadingContent
+import com.summercode.nettest.presentation.speed.SpeedTestScreen
 import com.summercode.nettest.ui.theme.NetTestTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -51,16 +52,17 @@ fun RootContent(
         }
 
         is RootUiState.Ready -> {
-            Column(
-                modifier = modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Text(
-                    text = uiState.mode.name,
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            }
+            SpeedTestScreen()
+//            Column(
+//                modifier = modifier.fillMaxSize(),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center,
+//            ) {
+//                Text(
+//                    text = uiState.mode.name,
+//                    style = MaterialTheme.typography.headlineMedium,
+//                )
+//            }
         }
     }
 }

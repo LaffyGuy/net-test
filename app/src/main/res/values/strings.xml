@@ -7,4 +7,11 @@
     <string name="error_server">The server is temporarily unavailable. Please try again.</string>
     <string name="error_malformed">Received an invalid configuration. Please try again.</string>
     <string name="error_unexpected">Something went wrong. Please try again.</string>
+    <string name="error_speed_server">The measurement server is unavailable. Please try again later.</string>
+    <string name="speed_idle_hint">Press Start to measure your download speed</string>
+    <string name="speed_value" formatted="true">%.1f Mbps</string>
+    <string name="speed_average" formatted="true">Average: %.1f Mbps</string>
+    <string name="speed_peak" formatted="true">Peak: %.1f Mbps</string>
+    <string name="action_start">Start</string>
+    <string name="action_stop">Stop</string>
 </resources>
