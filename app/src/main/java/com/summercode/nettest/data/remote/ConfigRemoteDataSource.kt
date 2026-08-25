@@ -20,11 +20,12 @@ class ConfigRemoteDataSource(
         val response = request()
 
         if (!response.status.isSuccess()) {
-            throw ConfigException(ConfigError.Server(response.status.value))
+            throw ConfigException(toStatusError(response.status.value))
         }
 
         return deserialize(response)
     }
+
 
     private suspend fun request(): HttpResponse =
         try {
@@ -43,9 +44,17 @@ class ConfigRemoteDataSource(
         } catch (throwable: Throwable) {
             val error = if (throwable is IOException) {
                 ConfigError.NoConnection
-            } else ConfigError.Malformed
+            } else {
+                ConfigError.Malformed
+            }
 
             throw ConfigException(error)
+        }
+
+    private fun toStatusError(statusCode: Int): ConfigError =
+        when (statusCode) {
+            in 400..499 -> ConfigError.ClientError(statusCode)
+            else -> ConfigError.ServerError(statusCode)
         }
 
     private fun Throwable.toTransportError(): ConfigError = when(this) {

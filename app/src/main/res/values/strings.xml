@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NetTest</string>
+    <string name="loading_config">Loading configuration…</string>
+    <string name="action_retry">Retry</string>
+    <string name="error_no_connection">No internet connection. Check your network and try again.</string>
+    <string name="error_client">Configuration is unavailable at this address. Please contact support.</string>
+    <string name="error_server">The server is temporarily unavailable. Please try again.</string>
+    <string name="error_malformed">Received an invalid configuration. Please try again.</string>
+    <string name="error_unexpected">Something went wrong. Please try again.</string>
 </resources>

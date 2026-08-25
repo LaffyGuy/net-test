@@ -4,7 +4,9 @@ sealed interface ConfigError {
 
     data object NoConnection: ConfigError
 
-    data class Server(val code: Int): ConfigError
+    data class ClientError(val code: Int): ConfigError
+
+    data class ServerError(val code: Int): ConfigError
 
     data object Malformed: ConfigError
 
