@@ -36,6 +36,7 @@ class SpeedTestRemoteDataSource(
                 chunk.close()
 
                 if (bytesRead > 0) {
+                    android.util.Log.d("SpeedTest", "read $bytesRead")
                     onBytesRead(bytesRead)
                 }
             }
