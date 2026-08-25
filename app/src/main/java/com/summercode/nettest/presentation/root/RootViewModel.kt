@@ -2,7 +2,6 @@ package com.summercode.nettest.presentation.root
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.summercode.nettest.domain.model.AppMode
 import com.summercode.nettest.domain.model.AppModeResult
 import com.summercode.nettest.domain.usecase.ResolveAppModeUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
