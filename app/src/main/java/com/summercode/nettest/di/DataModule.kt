@@ -28,28 +28,23 @@ val dataModule = module {
             androidContext().preferencesDataStoreFile(PREFERENCES_FILE_NAME)
         }
     }
+    single { ModeLocalDataSource(dataStore = get()) }
+    single<AppModeRepository> {
+        AppModeRepositoryImpl(
+            remoteDataSource = get(),
+            localDataSource = get(),
+        )
+    }
 
     single {
         Room.databaseBuilder(
             androidContext(),
             AppDatabase::class.java,
-            DATABASE_NAME
+            DATABASE_NAME,
         ).build()
     }
-
     single { get<AppDatabase>().speedResultDao() }
+    single<MeasurementRepository> { MeasurementRepositoryImpl(speedResultDao = get()) }
 
-    single<MeasurementRepository> { MeasurementRepositoryImpl(get()) }
-
-    single { ModeLocalDataSource(dataStore = get()) }
-
-    single<AppModeRepository> {
-        AppModeRepositoryImpl(
-            remoteDataSource = get(),
-            localDataSource = get()
-        )
-    }
-
-    single<SpeedTestRepository> { SpeedTestRepositoryImpl(get()) }
-
+    single<SpeedTestRepository> { SpeedTestRepositoryImpl(remoteDataSource = get()) }
 }

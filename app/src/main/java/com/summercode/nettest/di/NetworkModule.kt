@@ -17,16 +17,11 @@ private const val USER_AGENT = "NetTest/1.0 (Android)"
 val networkModule = module {
 
     single {
-        Json {
-            ignoreUnknownKeys = true
-        }
-    }
-
-    single {
         HttpClient(OkHttp) {
             install(ContentNegotiation) {
-                val json: Json = get()
+                val json = Json { ignoreUnknownKeys = true }
                 json(json)
+                // GitHub raw віддає .json із заголовком text/plain (x-content-type-options: nosniff)
                 json(json, contentType = ContentType.Text.Plain)
             }
             install(HttpTimeout) {
