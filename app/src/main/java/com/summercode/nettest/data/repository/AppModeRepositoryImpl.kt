@@ -27,7 +27,7 @@ class AppModeRepositoryImpl(
             throw cancellation
         } catch (configException: ConfigException) {
             AppModeResult.Failure(configException.error)
-        } catch (ioException: IOException) {
+        } catch (_: IOException) {
             AppModeResult.Failure(ConfigError.Unexpected("CacheWriteFailed"))
         }
 
