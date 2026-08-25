@@ -6,11 +6,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.summercode.nettest.domain.model.AppMode
 import com.summercode.nettest.domain.model.ConfigError
 import com.summercode.nettest.presentation.common.ErrorContent
 import com.summercode.nettest.presentation.common.LoadingContent
-import com.summercode.nettest.presentation.speed.SpeedTestScreen
+import com.summercode.nettest.presentation.main.MainScreen
 import com.summercode.nettest.ui.theme.NetTestTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -46,17 +45,10 @@ fun RootContent(
         }
 
         is RootUiState.Ready -> {
-            SpeedTestScreen()
-//            Column(
-//                modifier = modifier.fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center,
-//            ) {
-//                Text(
-//                    text = uiState.mode.name,
-//                    style = MaterialTheme.typography.headlineMedium,
-//                )
-//            }
+            MainScreen(
+                mode = uiState.mode,
+                modifier = modifier,
+            )
         }
     }
 }
@@ -75,17 +67,6 @@ private fun RootContentErrorPreview() {
     NetTestTheme {
         RootContent(
             uiState = RootUiState.Error(ConfigError.NoConnection),
-            onRetry = {},
-        )
-    }
-}
-
-@Preview(name = "Ready", showBackground = true)
-@Composable
-private fun RootContentReadyPreview() {
-    NetTestTheme {
-        RootContent(
-            uiState = RootUiState.Ready(AppMode.SPEED),
             onRetry = {},
         )
     }
