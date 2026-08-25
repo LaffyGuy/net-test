@@ -8,5 +8,6 @@ import com.summercode.nettest.domain.model.SpeedTestError
 fun SpeedTestError.toMessageRes(): Int = when (this) {
     is SpeedTestError.NoConnection -> R.string.error_no_connection
     is SpeedTestError.Unexpected -> R.string.error_unexpected
-    is SpeedTestError.ServerUnavailable -> R.string.error_speed_server
+    is SpeedTestError.ClientError -> R.string.error_speed_client
+    is SpeedTestError.ServerError -> R.string.error_speed_server
 }

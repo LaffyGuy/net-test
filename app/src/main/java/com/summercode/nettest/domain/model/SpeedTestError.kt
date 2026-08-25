@@ -4,7 +4,9 @@ sealed interface SpeedTestError {
 
     data object NoConnection: SpeedTestError
 
-    data class ServerUnavailable(val code: Int) : SpeedTestError
+    data class ClientError(val code: Int) : SpeedTestError
+
+    data class ServerError(val code: Int) : SpeedTestError
 
     data class Unexpected(val message: String): SpeedTestError
 

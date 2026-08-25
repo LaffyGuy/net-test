@@ -1,5 +1,6 @@
 package com.summercode.nettest.presentation.speed
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +30,6 @@ import com.summercode.nettest.domain.model.SpeedTestError
 import com.summercode.nettest.ui.theme.NetTestTheme
 import org.koin.androidx.compose.koinViewModel
 
-private const val TEST_DURATION_MILLIS = 10_000f
 
 @Composable
 fun SpeedTestScreen(
@@ -38,10 +38,11 @@ fun SpeedTestScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val activity = LocalActivity.current
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP) {
+            if (event == Lifecycle.Event.ON_STOP && activity?.isChangingConfigurations != true) {
                 viewModel.stop()
             }
         }
@@ -49,7 +50,9 @@ fun SpeedTestScreen(
 
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            viewModel.stop()
+            if (activity?.isChangingConfigurations != true) {
+                viewModel.stop()
+            }
         }
     }
 
@@ -90,7 +93,7 @@ fun SpeedTestContent(
                     style = MaterialTheme.typography.displayMedium,
                 )
                 LinearProgressIndicator(
-                    progress = { uiState.elapsedMillis / TEST_DURATION_MILLIS },
+                    progress = { uiState.progress },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 24.dp),
@@ -142,7 +145,7 @@ private fun SpeedTestIdlePreview() {
 private fun SpeedTestRunningPreview() {
     NetTestTheme {
         SpeedTestContent(
-            SpeedTestUiState.Running(currentMbps = 87.4, elapsedMillis = 4200),
+            SpeedTestUiState.Running(currentMbps = 87.4, progress = 0.42f),
             {}, {},
         )
     }

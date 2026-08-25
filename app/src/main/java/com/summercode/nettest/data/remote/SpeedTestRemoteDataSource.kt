@@ -23,9 +23,7 @@ class SpeedTestRemoteDataSource(
             }
         }.execute { response ->
             if (!response.status.isSuccess()) {
-                throw SpeedTestException(
-                    SpeedTestError.ServerUnavailable(response.status.value)
-                )
+                throw SpeedTestException(toStatusError(response.status.value))
             }
 
             val channel: ByteReadChannel = response.bodyAsChannel()
@@ -36,12 +34,17 @@ class SpeedTestRemoteDataSource(
                 chunk.close()
 
                 if (bytesRead > 0) {
-                    android.util.Log.d("SpeedTest", "read $bytesRead")
                     onBytesRead(bytesRead)
                 }
             }
         }
     }
+
+    private fun toStatusError(statusCode: Int): SpeedTestError =
+        when (statusCode) {
+            in 400..499 -> SpeedTestError.ClientError(statusCode)
+            else -> SpeedTestError.ServerError(statusCode)
+        }
 
     private companion object {
         const val DOWNLOAD_URL = "https://proof.ovh.net/files/1Gb.dat"

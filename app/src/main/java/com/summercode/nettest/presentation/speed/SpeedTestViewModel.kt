@@ -24,7 +24,7 @@ class SpeedTestViewModel(
     fun start() {
         if (measurementJob?.isActive == true) return
 
-        _uiState.value = SpeedTestUiState.Running(currentMbps = 0.0, elapsedMillis = 0)
+        _uiState.value = SpeedTestUiState.Running(currentMbps = 0.0, progress = 0f)
 
         measurementJob = viewModelScope.launch {
             var peakMbps = 0.0
@@ -39,7 +39,7 @@ class SpeedTestViewModel(
 
                     _uiState.value = SpeedTestUiState.Running(
                         currentMbps = sample.currentMbps,
-                        elapsedMillis = sample.elapsedMillis,
+                        progress = sample.elapsedMillis.toProgress(),
                     )
                 }
             } catch (cancellation: CancellationException) {
@@ -64,7 +64,10 @@ class SpeedTestViewModel(
     fun stop() {
         measurementJob?.cancel()
         measurementJob = null
-        _uiState.value = SpeedTestUiState.Idle
+
+        if (_uiState.value is SpeedTestUiState.Running) {
+            _uiState.value = SpeedTestUiState.Idle
+        }
     }
 
 }
@@ -73,3 +76,6 @@ private fun toMbps(bytes: Long, millis: Long): Double {
     if (millis <= 0) return 0.0
     return bytes * 8 * 1000.0 / millis / 1_000_000.0
 }
+
+private fun Long.toProgress(): Float =
+    (this.toFloat() / RunSpeedTestUseCase.TEST_DURATION_MILLIS).coerceIn(0f, 1f)

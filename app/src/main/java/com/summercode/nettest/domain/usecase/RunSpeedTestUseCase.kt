@@ -7,8 +7,6 @@ import com.summercode.nettest.domain.repository.SpeedTestRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-private const val TEST_DURATION_MILLIS = 10_000L
-
 class RunSpeedTestUseCase(
     private val speedTestRepository: SpeedTestRepository,
     private val measurementRepository: MeasurementRepository,
@@ -26,7 +24,6 @@ class RunSpeedTestUseCase(
             emit(sample)
         }
 
-
         val finalSample = lastSample ?: return@flow
         measurementRepository.save(
             SpeedTestResult(
@@ -36,6 +33,9 @@ class RunSpeedTestUseCase(
         )
     }
 
+    companion object {
+        const val TEST_DURATION_MILLIS = 10_000L
+    }
 }
 
 private fun toMbps(bytes: Long, millis: Long): Double {

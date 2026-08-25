@@ -4,7 +4,7 @@ import com.summercode.nettest.domain.model.Measurement
 import com.summercode.nettest.domain.repository.MeasurementRepository
 import kotlinx.coroutines.flow.Flow
 
-class ObserveMeasurementUseCase(
+class ObserveMeasurementsUseCase(
     private val measurementRepository: MeasurementRepository
 ) {
 

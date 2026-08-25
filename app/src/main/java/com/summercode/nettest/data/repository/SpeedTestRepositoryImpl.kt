@@ -54,10 +54,11 @@ class SpeedTestRepositoryImpl(
                 }
 
                 if (elapsedMillis >= durationMillis) {
-                    throw MeasurementCompleted
+                    throw MeasurementCompleted()
                 }
             }
-        } catch (completed: MeasurementCompleted) {
+        } catch (_: MeasurementCompleted) {
+            // Заплановане завершення: минув час тесту, з'єднання закривається виходом з execute.
         } catch (cancellation: CancellationException) {
             throw cancellation
         } catch (speedTestException: SpeedTestException) {
@@ -76,7 +77,7 @@ class SpeedTestRepositoryImpl(
         )
     }.flowOn(Dispatchers.IO)
 
-    private object MeasurementCompleted : Throwable(null, null, false, false)
+    private class MeasurementCompleted : Throwable(null, null, false, false)
 
 }
 
