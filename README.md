@@ -11,6 +11,8 @@ Clean Architecture (single module: `domain` / `data` / `presentation`).
 Requires JDK 17 and **Android SDK Platform 37** — `compileSdk = 37` is forced by
 `androidx.core:core-ktx:1.19.0`, which declares `minCompileSdk = 37`.
 
+A signed release APK is attached to the [latest release](https://github.com/LaffyGuy/net-test/releases).
+
 ## Remote config
 
 **Hosting.** The config lives in this repository and is served over GitHub raw:
