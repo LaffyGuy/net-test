@@ -14,7 +14,6 @@ import com.summercode.nettest.domain.repository.AppModeRepository
 import com.summercode.nettest.domain.repository.MeasurementRepository
 import com.summercode.nettest.domain.repository.SpeedTestRepository
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.scope.get
 import org.koin.dsl.module
 
 private const val PREFERENCES_FILE_NAME = "app_settings"
